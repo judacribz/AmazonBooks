@@ -28,6 +28,7 @@
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/padding_inner"
             android:paddingBottom="@dimen/padding_inner"
+            android:textSize="@dimen/font_size_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/ivBookThumbnail"
             app:layout_constraintTop_toTopOf="parent"
@@ -39,8 +40,10 @@
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/padding_inner"
             android:paddingTop="@dimen/padding_inner"
-            app:layout_constraintStart_toEndOf="@id/tvBookTitle"
-            app:layout_constraintTop_toBottomOf="@id/tvBookTitle"
+            android:textSize="@dimen/font_size_author"
+            app:layout_constraintStart_toEndOf="@id/ivBookThumbnail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             tools:ignore="RtlSymmetry" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

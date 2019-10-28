@@ -1,5 +1,6 @@
 package com.judacribz.amazonbooks.view.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.judacribz.amazonbooks.model.amazonbooksresponse.Book;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,9 +62,12 @@ public class AmazonBooksAdapter extends RecyclerView.Adapter<AmazonBooksAdapter.
         @BindView(R.id.tvBookAuthor)
         TextView tvBookAuthor;
 
+        Context context;
+
         AmazonBookHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            context = itemView.getContext();
         }
 
         void bindViews(Book book) {
@@ -73,7 +78,11 @@ public class AmazonBooksAdapter extends RecyclerView.Adapter<AmazonBooksAdapter.
             tvBookTitle.setText(book.getTitle());
             final String bookAuthor = book.getAuthor();
             if (bookAuthor != null) {
-                tvBookAuthor.setText(bookAuthor)    ;
+                tvBookAuthor.setText(String.format(
+                        Locale.US,
+                        context.getString(R.string.str_author),
+                        bookAuthor
+                ));
             }
         }
     }

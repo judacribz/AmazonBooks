@@ -12,7 +12,7 @@ public class Book implements Parcelable {
     private String title;
     @SerializedName("author")
     @Expose
-    private String author;
+    private String author = null;
     @SerializedName("imageURL")
     @Expose
     private String imageURL;

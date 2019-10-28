@@ -3,4 +3,6 @@
     <dimen name="margin">10dp</dimen>
     <dimen name="padding_outer">10dp</dimen>
     <dimen name="padding_inner">5dp</dimen>
+    <dimen name="font_size_title">18sp</dimen>
+    <dimen name="font_size_author">12sp</dimen>
 </resources>
