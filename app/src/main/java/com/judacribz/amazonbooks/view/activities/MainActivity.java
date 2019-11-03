@@ -2,18 +2,14 @@ package com.judacribz.amazonbooks.view.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 
 import android.os.Bundle;
 
 import com.judacribz.amazonbooks.R;
 import com.judacribz.amazonbooks.databinding.ActivityMainBinding;
-import com.judacribz.amazonbooks.model.amazonbooksresponse.Book;
 import com.judacribz.amazonbooks.viewmodel.AmazonBooksViewModel;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private AmazonBooksViewModel amazonBooksViewModel;
@@ -28,10 +24,12 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding.setViewmodel(amazonBooksViewModel = new AmazonBooksViewModel());
         activityMainBinding.setLifecycleOwner(this);
 
-        amazonBooksViewModel.getBooksList().observe(
+        amazonBooksViewModel.getMutableBookList().observe(
                 this,
                 books -> amazonBooksViewModel.updateAdapter(books)
         );
+
+        amazonBooksViewModel.requestAmazonBooks();
     }
 
     @Override

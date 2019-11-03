@@ -1,6 +1,7 @@
 package com.judacribz.amazonbooks.view.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.judacribz.amazonbooks.R;
 import com.judacribz.amazonbooks.model.amazonbooksresponse.Book;
+import com.judacribz.amazonbooks.view.activities.DetailActivity;
+import com.judacribz.amazonbooks.view.activities.MainActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -68,6 +71,10 @@ public class AmazonBooksAdapter extends RecyclerView.Adapter<AmazonBooksAdapter.
             super(itemView);
             ButterKnife.bind(this, itemView);
             context = itemView.getContext();
+
+            itemView.setOnClickListener(
+                    v -> context.startActivity(new Intent(context, DetailActivity.class))
+            );
         }
 
         void bindViews(Book book) {

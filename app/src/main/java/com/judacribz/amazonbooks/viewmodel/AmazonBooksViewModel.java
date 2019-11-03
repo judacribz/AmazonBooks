@@ -1,7 +1,5 @@
 package com.judacribz.amazonbooks.viewmodel;
 
-import android.content.Context;
-
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.lifecycle.MutableLiveData;
@@ -9,7 +7,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.judacribz.amazonbooks.BR;
 import com.judacribz.amazonbooks.model.amazonbooksresponse.Book;
 import com.judacribz.amazonbooks.model.dagger.components.DaggerRetrofitComponent;
-import com.judacribz.amazonbooks.model.dagger.components.RetrofitComponent;
 import com.judacribz.amazonbooks.model.datasource.remote.retrofit.AmazonBooksObserver;
 import com.judacribz.amazonbooks.model.datasource.remote.retrofit.AmazonBooksService;
 import com.judacribz.amazonbooks.model.event.AmazonBooksEvent;
@@ -25,34 +22,35 @@ import javax.inject.Inject;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.judacribz.amazonbooks.model.datasource.remote.retrofit.AmazonBooksRetrofitHelper.getObservableAmazonBooksData;
-
 public class AmazonBooksViewModel extends BaseObservable {
+
+    private final MutableLiveData<List<Book>> mutableBookList = new MutableLiveData<>();
+
     @Inject
     AmazonBooksService amazonBooksService;
-
-    private final MutableLiveData<List<Book>> booksList = new MutableLiveData<>();
-
-    public AmazonBooksViewModel() {
-        DaggerRetrofitComponent.builder().build().inject(this);
-
-        amazonBooksService
-                .getAmazonBooks()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new AmazonBooksObserver());
-    }
 
     @Bindable
     public AmazonBooksAdapter adapter = null;
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onAmazonBooksEventReceived(AmazonBooksEvent event) {
-        booksList.setValue(event.getBooks());
+    public AmazonBooksViewModel() {
+        DaggerRetrofitComponent.builder().build().inject(this);
     }
 
-    public MutableLiveData<List<Book>> getBooksList() {
-        return booksList;
+    public void requestAmazonBooks() {
+        amazonBooksService
+                .getAmazonBooks()
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.computation())
+                .subscribe(new AmazonBooksObserver());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onAmazonBooksEventReceived(AmazonBooksEvent event) {
+        mutableBookList.setValue(event.getBooks());
+    }
+
+    public MutableLiveData<List<Book>> getMutableBookList() {
+        return mutableBookList;
     }
 
     public void updateAdapter(List<Book> books) {
